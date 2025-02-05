@@ -116,7 +116,7 @@ public class ServosNDrive extends LinearOpMode {
         outtakeClaw = hardwareMap.get(Servo.class, "7");
 
 
-        clawPivot.setPosition(Values.MID_SERVO);
+        clawPivot.setPosition(Values.clawPivotInit);
         wrist.setPosition(Values.MID_SERVO);
         intakeElbow.setPosition(Values.intakeElbowUp);
 

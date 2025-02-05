@@ -35,4 +35,6 @@ public class Values {
 
     public static double velocity = 1.00;
 
+    public static double clawPivotInit = 5.5;
+
 }
