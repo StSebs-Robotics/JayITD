@@ -42,21 +42,7 @@ public class testServos extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-//            clawOffset1 = clawOffset1 +(-gamepad1.left_stick_y)*0.3;
-//            clawOffset2 = clawOffset2 +(gamepad1.right_stick_y)*0.3;
-//            if(gamepad1.dpad_up){
-//                clawOffset1 = (servo1.getPosition()+0.04);
-//            }else if (gamepad1.dpad_down){
-//                    clawOffset1 = (servo1.getPosition()-0.04);
-//            }
-//            if(gamepad1.dpad_right){
-//                clawOffset2 = (servo2.getPosition()+0.04);
-//            }else if (gamepad1.dpad_down){
-//                clawOffset2 = (servo2.getPosition()-0.04);
-//            }
 //
-//            left = clawOffset1;
-//            right = clawOffset2;
             left = -gamepad1.left_stick_y;
             right = gamepad1.right_stick_y;
             servo1.setPosition(left);

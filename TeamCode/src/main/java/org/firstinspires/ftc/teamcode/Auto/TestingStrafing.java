@@ -44,47 +44,28 @@ import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "trying to go square", group = "Autonomous")
-public class GoStraight extends LinearOpMode {
+@Autonomous(name = "a field legth of strafing ", group = "Autonomous")
+public class TestingStrafing extends LinearOpMode {
 
 
     @Override public void runOpMode(){
         //all of these are during init
 
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d initialPose = new Pose2d(-62, -61, Math.toRadians(90));
+        Pose2d initialPose = Positions.corner;
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Servos servos = new Servos(hardwareMap);
 
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
-                .splineToConstantHeading(new Vector2d(-50,-50),Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-50,50),Math.toRadians(90))
-                .strafeTo(new Vector2d(40,50))
-                .splineToConstantHeading(new Vector2d(40,-40),Math.toRadians(90))
-                //.lineToY(-40)
-                .strafeTo(new Vector2d(-50,-40));
+                //.strafeTo(new Vector2d(62,-61));
+                        .lineToY(62);
 
-
-        // vision here that outputs position
-        int visionOutputPosition = 1;
-
-        // actions that need to happen on init; for instance, a claw tightening.
-        //Actions.runBlocking(claw.closeClaw());
-        while (!isStopRequested() && !opModeIsActive()) {
-            int position = visionOutputPosition;
-            telemetry.addData("Position during Init", position);
-            telemetry.update();
-        }
-        int startPosition = visionOutputPosition;
-        telemetry.addData("Starting Position", startPosition);
-        telemetry.update();
         waitForStart();
 
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        servos.GrabWaitSequence(),
                         initToCLips.build()
                 )
         );
