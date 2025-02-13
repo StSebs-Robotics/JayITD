@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "REAL TELEOP", group = "Linear OpMode")
+@TeleOp(name = "OFFICIAL TELEOP", group = "Linear OpMode")
 //@Disabled
 public class Official extends LinearOpMode {
 
@@ -179,6 +179,7 @@ public class Official extends LinearOpMode {
                 rightFrontDrive.setPower(frontRightPower);
                 rightBackDrive.setPower(backRightPower);
             }
+            //TODO: fix this shit
             if (currentGamepad1.share && previousGamepad1.share) {
                 while (botHeading != 0) {
                     leftFrontDrive.setPower(1);
@@ -227,11 +228,8 @@ public class Official extends LinearOpMode {
             }
 
             //all servo stuff
-
-
-            // wtf happened here
             sethControlThing = outtakeElbow.getPosition();
-            //trigger controls gp2
+            //trigger controls outake elbow
             while (gamepad2.left_trigger > 0) {
                 sethControlThing += 0.001;
                 if (sethControlThing > .85){
@@ -384,7 +382,7 @@ public class Official extends LinearOpMode {
         intakeSlide1.setPosition(Values.slide1wait);
         intakeSlide2.setPosition(Values.slide2wait);
     }
-    private void moveSlides ( int distance, double velocity){
+    private void moveSlides (int distance, double velocity){
         outtakeSlide1.setTargetPosition(distance);
         outtakeSlide2.setTargetPosition(distance);
 
