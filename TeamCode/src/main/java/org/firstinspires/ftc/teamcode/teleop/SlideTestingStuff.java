@@ -6,14 +6,17 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Motors huh", group="Linear OpMode")
+@TeleOp(name="Motors, and servo slide", group="Linear OpMode")
 @Disabled
 public class SlideTestingStuff extends LinearOpMode {
 
     private DcMotor daMotor = null;
     private DcMotor slide1 = null;
     private DcMotor slide2 = null;
+    public Servo servo1    = null;
+    public Servo servo2   = null;
     private final int[] slidePosition = {0};
     private boolean slidesIsUp;
 
@@ -24,6 +27,9 @@ public class SlideTestingStuff extends LinearOpMode {
         daMotor = hardwareMap.get(DcMotorEx.class, "Motor7");
         slide1 = hardwareMap.get(DcMotor.class, "Motor5");
         slide2 = hardwareMap.get(DcMotor.class, "Motor6");
+        servo2 = hardwareMap.get(Servo.class, "4");
+        servo1 = hardwareMap.get(Servo.class, "5");
+
         slide1.setDirection(DcMotor.Direction.REVERSE);
         slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -72,10 +78,40 @@ public class SlideTestingStuff extends LinearOpMode {
                 }
             }
 
+            {
+                if (gamepad1.dpad_up) {
+                    slidesOut();
+                } else if (gamepad1.dpad_down && gamepad1.dpad_down) {
+                    slidesIn();
+                }
+                if (gamepad1.dpad_left && !gamepad1.dpad_left) {
+                    slideServo(true);
+                } else if (gamepad1.dpad_right && !gamepad1.dpad_right) {
+                    slideServo(false);
+                }
+            }
+
             telemetry.update();
         }
     }
-    private void moveSlides ( int distance, double velocity){
+    private void slidesOut () {
+        servo1.setPosition(Values.slide1out);
+        servo2.setPosition(Values.slide2out);
+    }
+    private void slidesIn () {
+        servo1.setPosition(Values.slide1in);
+        servo2.setPosition(Values.slide2in);
+    }
+    private void slideServo (boolean goingOut) {
+        if (goingOut) {
+            servo2.setPosition(servo2.getPosition() + 0.05);
+            servo1.setPosition(servo1.getPosition() - 0.05);
+        } else {
+            servo2.setPosition(servo2.getPosition() - 0.05);
+            servo1.setPosition(servo1.getPosition() + 0.05);
+        }
+    }
+    private void moveSlides(int distance, double velocity){
         slide1.setTargetPosition(distance);
         slide2.setTargetPosition(distance);
 
