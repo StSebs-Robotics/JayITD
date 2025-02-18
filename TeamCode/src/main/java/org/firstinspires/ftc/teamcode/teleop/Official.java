@@ -88,8 +88,8 @@ public class Official extends LinearOpMode {
         outtakeElbow.setPosition(Values.outtakeElbowDown+0.06);
 
         //make servo go slower
-//        intakeSlide1.scaleRange(2000, 600);
-//        intakeSlide1.scaleRange(2000, 600);
+        //intakeSlide1.scaleRange(2000, 600);
+        //intakeSlide1.scaleRange(2000, 600);
         intakeSlide1.setPosition(Values.slide1wait);
         intakeSlide2.setPosition(Values.slide2wait);
 
