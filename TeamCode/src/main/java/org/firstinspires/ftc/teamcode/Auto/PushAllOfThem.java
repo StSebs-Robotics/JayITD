@@ -59,21 +59,32 @@ public class PushAllOfThem extends LinearOpMode {
         servos = new Servos(hardwareMap);
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(40,-23),Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(42,-35),0)
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(47,-52),Math.toRadians(270))
-                .setTangent(Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-6.9,31),Math.toRadians(270))
+                .setTangent(90)
+                //Slides down open claw
 
-                .splineToConstantHeading(new Vector2d(53,25),Math.toRadians(45))
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(53,-52),Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-32,33),Math.toRadians(270))
+                .waitSeconds(1)
 
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(64,25),Math.toRadians(45))
+                .setTangent(Math.toRadians(325))
+                .splineToLinearHeading(new Pose2d(-46,13,Math.toRadians(90)),Math.toRadians(170))
+
+                // 1st pixel
+                .strafeTo(new Vector2d(-46,59))
+                .strafeTo(new Vector2d(-46,13))
+
+                //2nd Pixel
+                .strafeTo(new Vector2d(-56,13))
+                .strafeTo(new Vector2d(-56,59))
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(64d,-52),Math.toRadians(270));
+                .strafeTo(new Vector2d(-56,13))
+
+
+                //3rd Pixel
+                .strafeTo(new Vector2d(-66,13))
+                .strafeTo(new Vector2d(-66,59))
+                .setTangent(Math.toRadians(270))
+                .strafeTo(new Vector2d(-66,13));
 
         int visionOutputPosition = 1;
 
