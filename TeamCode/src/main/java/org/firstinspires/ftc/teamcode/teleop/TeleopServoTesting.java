@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="test servos", group="Linear OpMode")
+@TeleOp(name="test servos of teleop", group="Linear OpMode")
 //@Disabled
 public class TeleopServoTesting extends LinearOpMode {
 
@@ -26,10 +27,8 @@ public class TeleopServoTesting extends LinearOpMode {
     private boolean elbowIsDown = false;
     private boolean outtakeIsDown = false;
     private boolean outtakeIsFlat = false;
-    private boolean slidesIsUp = false;
 
-    Gamepad currentGamepad1 = new Gamepad();
-    Gamepad previousGamepad1 = new Gamepad();
+
 
 
     @Override
@@ -48,6 +47,8 @@ public class TeleopServoTesting extends LinearOpMode {
 
         outtakeClaw.setPosition(Values.outakeclawOpen);
         outtakeElbow.setPosition(Values.outtakeElbowDown);
+        intakeClaw.setPosition(Values.intakeclawClose);
+        intakeElbow.setPosition(Values.intakeElbowUp);
         telemetry.update();
 
         // Wait for the game to start (driver presses START)
@@ -58,22 +59,22 @@ public class TeleopServoTesting extends LinearOpMode {
 
             //horizontal slides in N out
             {
-                if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
+                if (gamepad1.dpad_up ) {
                     slidesOut();
-                } else if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
+                } else if (gamepad1.dpad_down) {
                     slidesIn();
                 }
             }
             //intake slide out & in
-            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+            if (gamepad1.dpad_left ) {
                 slideServo(true);
-            } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
+            } else if (gamepad1.dpad_right) {
                 slideServo(false);
             }
 
             //intake open N close
             //don know y its kinda jank
-            if (currentGamepad1.circle && !previousGamepad1.circle) {
+            if (gamepad1.circle) {
                 if (!elbowIsDown) {
                     intakeElbow.setPosition(Values.intakeElbowWait);
                     intakeClaw.setPosition(Values.intakeClawOpen);
@@ -103,7 +104,7 @@ public class TeleopServoTesting extends LinearOpMode {
                     elbowIsDown = false;
                 }
             }
-            if (currentGamepad1.cross && !previousGamepad1.cross) {
+            if (gamepad1.cross) {
                 if (!elbowIsDown) {
                     intakeElbow.setPosition(Values.intakeElbowWait);
                     wrist.setPosition(Values.wristDown);
@@ -129,7 +130,7 @@ public class TeleopServoTesting extends LinearOpMode {
             }
 
             //outtake
-            if (currentGamepad1.triangle && !previousGamepad1.triangle) {
+            if (gamepad1.triangle) {
                 if (!outtakeIsDown) {
                     outtakeClaw.setPosition(Values.outakeclawOpen);
                     sleep(200);
@@ -142,7 +143,7 @@ public class TeleopServoTesting extends LinearOpMode {
                     outtakeIsDown = false;
                 }
             }
-            if (currentGamepad1.square && !previousGamepad1.square) {
+            if (gamepad1.square) {
                 if (!outtakeIsFlat) {
                     outtakeClaw.setPosition(Values.outakeclawOpen+0.03);
                     sleep(200);
