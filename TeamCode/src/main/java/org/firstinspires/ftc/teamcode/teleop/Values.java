@@ -6,16 +6,16 @@ public class Values {
     public static double speedReducer = .3;
 
     public static double intakeClawOpen = .7;
-    public static double intakeclawClose = .4;
+    public static double intakeclawClose = .45;
 
     public static double wristDown = .1;
     public static double wristUp = .6;
 
     public static double intakeElbowDown = .2;
-    public static double intakeElbowUp = .55;
+    public static double intakeElbowUp = .98;
     public static double intakeElbowWait = .3;
 
-    public static double outtakeElbowDown = .7;
+    public static double outtakeElbowDown = .83;
     public static double outtakeElbowUp = 0.2;
     public static double outtakeElbowFlat = 0.03;
 
@@ -35,6 +35,6 @@ public class Values {
 
     public static double velocity = 1.00;
 
-    public static double clawPivotInit = 5.5;
+    public static double clawPivotInit = 5.15;
 
 }
