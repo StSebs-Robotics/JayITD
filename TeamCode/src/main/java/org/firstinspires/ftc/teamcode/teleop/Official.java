@@ -280,19 +280,14 @@ public class Official extends LinearOpMode {
                     wrist.setPosition(Values.wristUp);
                     clawPivot.setPosition(Values.MID_SERVO);
                     intakeElbow.setPosition(Values.intakeElbowUp);
-                    slidesTransfer();
-                    //slidesIn();
+                    slidesIn();
                     sleep(1200);
                     outtakeClaw.setPosition(Values.outtakeClawClose);
-                    sleep(400);
+                    sleep(300);
                     intakeClaw.setPosition(Values.intakeClawOpen);
-                    intakeSlide1.setPosition(Values.slide1wait-0.1);
-                    intakeSlide2.setPosition(Values.slide2wait+0.1);
                     sleep(200);
-                    intakeElbow.setPosition(Values.intakeElbowWait);
                     outtakeElbow.setPosition(Values.outtakeElbowUp);
                     elbowIsDown = false;
-                    slidesIn();
                 }
             }
                 if (currentGamepad2.cross && !previousGamepad2.cross) {
@@ -312,13 +307,6 @@ public class Official extends LinearOpMode {
                         intakeElbow.setPosition(Values.intakeElbowUp);
                         elbowIsDown = false;
                     }
-
-                    sleep(250);
-                    intakeClaw.setPosition(Values.intakeclawClose);
-                    sleep(200);
-                    wrist.setPosition(Values.wristUp);
-                    intakeElbow.setPosition(Values.intakeElbowUp);
-                    slidesIn();
                 }
 
                 //outtake

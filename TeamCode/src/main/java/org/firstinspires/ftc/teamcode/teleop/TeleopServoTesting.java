@@ -1,13 +1,9 @@
 
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="test servos of teleop", group="Linear OpMode")
 //@Disabled
@@ -27,6 +23,7 @@ public class TeleopServoTesting extends LinearOpMode {
     private boolean elbowIsDown = false;
     private boolean outtakeIsDown = false;
     private boolean outtakeIsFlat = false;
+    private boolean outtakeIsclose = false;
 
 
 
@@ -49,6 +46,7 @@ public class TeleopServoTesting extends LinearOpMode {
         outtakeElbow.setPosition(Values.outtakeElbowDown);
         intakeClaw.setPosition(Values.intakeclawClose);
         intakeElbow.setPosition(Values.intakeElbowUp);
+        clawPivot.setPosition(Values.clawPivotInit);
         telemetry.update();
 
         // Wait for the game to start (driver presses START)
@@ -66,95 +64,50 @@ public class TeleopServoTesting extends LinearOpMode {
                 }
             }
             //intake slide out & in
+            double clawPos = intakeClaw.getPosition();
             if (gamepad1.dpad_left ) {
-                slideServo(true);
+                intakeClaw.setPosition( clawPos += 0.02);
             } else if (gamepad1.dpad_right) {
-                slideServo(false);
+                intakeClaw.setPosition( clawPos -= 0.02);
             }
 
             //intake open N close
             //don know y its kinda jank
             if (gamepad1.circle) {
-                if (!elbowIsDown) {
-                    intakeElbow.setPosition(Values.intakeElbowWait);
-                    intakeClaw.setPosition(Values.intakeClawOpen);
-                    wrist.setPosition(Values.wristDown);
-                    outtakeClaw.setPosition(Values.outakeclawOpen);
-                    outtakeElbow.setPosition(Values.outtakeElbowDown);
-                    //where the slide stuff goes
-                    elbowIsDown = true;
-                    slidesIn();
-                } else if (elbowIsDown == true) {
-                    intakeElbow.setPosition(Values.intakeElbowDown);
-                    sleep(500);
-                    intakeClaw.setPosition(Values.intakeclawClose);
-                    sleep(400);
-                    wrist.setPosition(Values.wristUp);
-                    clawPivot.setPosition(Values.MID_SERVO);
-                    intakeElbow.setPosition(Values.intakeElbowUp);
-                    slidesIn();
-                    //slidesIn();
-                    sleep(1200);
-                    outtakeClaw.setPosition(Values.outtakeClawClose);
-                    sleep(1000);
-                    intakeClaw.setPosition(Values.intakeClawOpen);
-                    sleep(200);
-                    intakeElbow.setPosition(Values.intakeElbowWait);
-                    outtakeElbow.setPosition(Values.outtakeElbowUp);
-                    elbowIsDown = false;
-                }
+                intakeElbow.setPosition(Values.intakeElbowWait);
+                intakeClaw.setPosition(Values.intakeClawOpen+0.3);
+                wrist.setPosition(Values.wristDown);
+                outtakeClaw.setPosition(Values.outakeclawOpen);
+                outtakeElbow.setPosition(Values.outtakeElbowDown);
             }
             if (gamepad1.cross) {
-                if (!elbowIsDown) {
-                    intakeElbow.setPosition(Values.intakeElbowWait);
-                    wrist.setPosition(Values.wristDown);
-                    intakeClaw.setPosition(Values.intakeClawOpen);
-                    elbowIsDown= true;
-                } else if (elbowIsDown) {
-                    //intakeClaw.setPosition(Values.intakeClawOpen);
-                    intakeElbow.setPosition(Values.intakeElbowDown);
-                    sleep(1000);
-                    intakeClaw.setPosition(Values.intakeclawClose);
-                    sleep(400);
-                    wrist.setPosition(Values.wristUp);
-                    clawPivot.setPosition(Values.MID_SERVO);
-                    intakeElbow.setPosition(Values.intakeElbowUp);elbowIsDown = false;
-                }
-
-                sleep(250);
+                intakeElbow.setPosition(Values.intakeElbowDown);
+                sleep(500);
                 intakeClaw.setPosition(Values.intakeclawClose);
-                sleep(200);
-                wrist.setPosition(Values.wristUp);
+                sleep(400);
                 intakeElbow.setPosition(Values.intakeElbowUp);
+                wrist.setPosition(Values.wristUp);
+                clawPivot.setPosition(Values.clawPivotInit);
                 slidesIn();
-            }
+                sleep(1200);
+                outtakeClaw.setPosition(Values.outtakeClawClose);
+                sleep(200);
+                intakeClaw.setPosition(Values.intakeClawOpen);
 
+
+            }
             //outtake
             if (gamepad1.triangle) {
-                if (!outtakeIsDown) {
-                    outtakeClaw.setPosition(Values.outakeclawOpen);
-                    sleep(200);
-                    outtakeElbow.setPosition(Values.outtakeElbowDown);
-                    outtakeIsDown = true;
-                } else if (outtakeIsDown) {
+                if (!outtakeIsclose){
                     outtakeClaw.setPosition(Values.outtakeClawClose);
-                    sleep(200);
-                    outtakeElbow.setPosition(Values.outtakeElbowUp);
-                    outtakeIsDown = false;
+                    outtakeIsclose = true;
+                } else if (outtakeIsclose) {
+                    outtakeClaw.setPosition(Values.outakeclawOpen);
+                    outtakeIsclose = false;
                 }
             }
             if (gamepad1.square) {
-                if (!outtakeIsFlat) {
-                    outtakeClaw.setPosition(Values.outakeclawOpen+0.03);
-                    sleep(200);
-                    outtakeElbow.setPosition(Values.outtakeElbowFlat);
-                    outtakeIsFlat = true;
-                } else if (outtakeIsFlat) {
-                    outtakeClaw.setPosition(Values.outtakeClawClose);
-                    sleep(200);
-                    outtakeElbow.setPosition(Values.outtakeElbowUp);
-                    outtakeIsFlat = false;
-                }
+                intakeClaw.setPosition(Values.intakeclawClose);
             }
 
 
