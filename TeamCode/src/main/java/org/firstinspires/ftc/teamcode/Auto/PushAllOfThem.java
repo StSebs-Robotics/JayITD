@@ -54,7 +54,7 @@ public class PushAllOfThem extends LinearOpMode {
         //all of these are during init
         // instantiate your MecanumDrive at a particular pose.
         Pose2d initialPose = Positions.clipsInitialPos;
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(7, -60, Math.toRadians(90)));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         // make instance
         servos = new Servos(hardwareMap);
         //test path
