@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions;
+package org.firstinspires.ftc.teamcode.Auto;
 
 // RR-specific imports
 
@@ -40,7 +40,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Auto.Positions;
+import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
+import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.SlideMotors;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
@@ -49,6 +50,7 @@ public class ShootForTheStar extends LinearOpMode {
 
     private Servos servos;
     private Pose2d currentPose;
+    private SlideMotors slideMotors;
 
     @Override public void runOpMode(){
         //all of these are during init
@@ -57,6 +59,7 @@ public class ShootForTheStar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(7, -60, Math.toRadians(90)));
         // make instance
         servos = new Servos(hardwareMap);
+        slideMotors = new SlideMotors(hardwareMap);
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 .splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
@@ -102,9 +105,12 @@ public class ShootForTheStar extends LinearOpMode {
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        initToCLips.build()
+                        servos.OuttakeClose(),
+                        servos.outtakeUp(),
+                        slideMotors.liftPutClips(),
+                        initToCLips.build(),
                         //clipthe thang,
-                        //clipsToPush.build()
+                        clipsToPush.build()
 
                 )
         );

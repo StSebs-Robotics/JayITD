@@ -56,6 +56,7 @@ public class SlideMotors {
     public Action liftDown() {
         return new LiftDown();
     }
+
     public class LiftPutClips implements Action {
         private boolean initialized = false;
 

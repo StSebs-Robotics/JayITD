@@ -215,6 +215,7 @@ public class Official extends LinearOpMode {
                     rightFrontDrive.setPower(-1);
                     rightBackDrive.setPower(-1);
                   botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+                  sleep(500);
                 }
             }
 
@@ -244,6 +245,12 @@ public class Official extends LinearOpMode {
                     slidePosition[0] = Values.slideMax;
                 }
                 moveSlides(slidePosition[0], Values.velocity);
+            }
+            if (currentGamepad1.cross && previousGamepad1.cross){
+                slidePosition[0] = 0;
+            }
+            if (currentGamepad1.circle && previousGamepad1.circle){
+                slidePosition[0] = Values.slideMax;
             }
             if (currentGamepad1.circle && previousGamepad1.circle) {
                 if (!slidesIsUp) {
@@ -281,7 +288,7 @@ public class Official extends LinearOpMode {
                         slidesIn();
                 }
             }
-            if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left) {
+            if ((currentGamepad1.dpad_left && !previousGamepad1.dpad_left)|| (currentGamepad2.dpad_up && !previousGamepad2.dpad_up)) {
                 slideServo(true);
             } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right) {
                 slideServo(false);
@@ -366,9 +373,9 @@ public class Official extends LinearOpMode {
                 }
                 //pivot!
                 if (currentGamepad2.dpad_right) {
-                    clawPivot.setPosition(clawPivot.getPosition() - 0.004);
+                    clawPivot.setPosition(clawPivot.getPosition() - 0.008);
                 } else if (currentGamepad2.dpad_left) {
-                    clawPivot.setPosition(clawPivot.getPosition() + 0.004);
+                    clawPivot.setPosition(clawPivot.getPosition() + 0.008);
                 } else if (currentGamepad2.share) {
                     clawPivot.setPosition(Values.MID_SERVO);
                 }
