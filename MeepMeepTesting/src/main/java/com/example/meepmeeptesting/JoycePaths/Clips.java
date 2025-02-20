@@ -1,3 +1,4 @@
+
 package com.example.meepmeeptesting.JoycePaths;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -15,37 +16,32 @@ public class Clips {
         RoadRunnerBotEntity myBot = new ActualBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-13.5, 60, Math.toRadians(270)))
-                        //Slides Up
-                        .splineToConstantHeading(new Vector2d(-7,32),Math.toRadians(270))
-                        .waitSeconds(5)
-                        //slides down
-                        //Open claw
-                        .splineToConstantHeading(new Vector2d(-7,34),Math.toRadians(90))
-                        .setTangent(Math.toRadians(90))
-                        .waitSeconds(.5)
-                        //slides all the way down
-                        .splineToConstantHeading(new Vector2d(-27,38),Math.toRadians(180))
-                        .setTangent(Math.toRadians(180))
-                        .splineToLinearHeading(new Pose2d(-46,13,Math.toRadians(90)),Math.toRadians(170))
-                        //foward
-                        .setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(-46,59),Math.toRadians(90))
-                        .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(-46,48),Math.toRadians(270))
-                        .setTangent(Math.toRadians(90))
-                        .waitSeconds(3)
-                        .splineToConstantHeading(new Vector2d(-46,65),Math.toRadians(90))
-                        .waitSeconds(5)
-                        //slides up
-                        //open claw
-                        //close claw
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-15.5, 60, Math.toRadians(270)))
+                        .splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
+                        .setTangent(90)
+                        //Slides down open claw
 
-                        //Slides Up
+                        .splineToConstantHeading(new Vector2d(-35,38),Math.toRadians(270))
+                        .waitSeconds(1)
+                        .strafeTo(new Vector2d(-35,13))
+
+                        // 1st pixel
+                        .strafeTo(new Vector2d(-46,13))
+                        .strafeTo(new Vector2d(-46,59))
+
+                        //2nd Pixel
+                        .strafeTo(new Vector2d(-46,13))
+                        .strafeTo(new Vector2d(-56,13))
                         .setTangent(Math.toRadians(270))
-                        .splineToLinearHeading(new Pose2d(-7,32,Math.toRadians(270)),Math.toRadians(270))
-                        //slides down
-                        //Open claw
+                        .strafeTo(new Vector2d(-56,59))
+
+
+                        //3rd Pixel
+                        .strafeTo(new Vector2d(-56,13))
+                        .strafeTo(new Vector2d(-63,13))
+                        .setTangent(Math.toRadians(270))
+                        .strafeTo(new Vector2d(-63,59))
+
 
                         .build());
 

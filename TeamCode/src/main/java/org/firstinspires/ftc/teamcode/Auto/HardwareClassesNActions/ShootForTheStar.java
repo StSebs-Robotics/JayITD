@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions;
 
 // RR-specific imports
 
@@ -40,12 +40,12 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
+import org.firstinspires.ftc.teamcode.Auto.Positions;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "push all of them", group = "Autonomous")
-public class PushAllOfThem extends LinearOpMode {
+@Autonomous(name = "Shoot for the stars", group = "Autonomous")
+public class ShootForTheStar extends LinearOpMode {
 
     private Servos servos;
     private Pose2d currentPose;
@@ -60,9 +60,9 @@ public class PushAllOfThem extends LinearOpMode {
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 .splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
-                .setTangent(90)
+                .setTangent(90);
                 //Slides down open claw
-
+        TrajectoryActionBuilder clipsToPush = drive.actionBuilder(new Pose2d(new Vector2d(-2,35),Math.toRadians(270)))
                 .splineToConstantHeading(new Vector2d(-35,38),Math.toRadians(270))
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(-35,13))
