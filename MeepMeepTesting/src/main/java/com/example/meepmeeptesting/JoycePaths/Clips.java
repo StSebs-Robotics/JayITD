@@ -22,25 +22,24 @@ public class Clips {
                         //Slides down open claw
 
                         .splineToConstantHeading(new Vector2d(-35,38),Math.toRadians(270))
-                        .waitSeconds(1)
                         .strafeTo(new Vector2d(-35,13))
 
                         // 1st pixel
-                        .strafeTo(new Vector2d(-46,13))
-                        .strafeTo(new Vector2d(-46,59))
+                        .strafeTo(new Vector2d(-45,13))
+                        .strafeTo(new Vector2d(-45,60))
 
                         //2nd Pixel
-                        .strafeTo(new Vector2d(-46,13))
-                        .strafeTo(new Vector2d(-56,13))
+                        .strafeTo(new Vector2d(-48,13))
+                        .strafeTo(new Vector2d(-57,13))
                         .setTangent(Math.toRadians(270))
-                        .strafeTo(new Vector2d(-56,59))
+                        .strafeTo(new Vector2d(-57,60))
 
 
                         //3rd Pixel
-                        .strafeTo(new Vector2d(-56,13))
-                        .strafeTo(new Vector2d(-63,13))
+                        .strafeTo(new Vector2d(-58,13))
+                        .strafeTo(new Vector2d(-62,13))
                         .setTangent(Math.toRadians(270))
-                        .strafeTo(new Vector2d(-63,59))
+                        .strafeTo(new Vector2d(-62,60))
 
 
                         .build());
