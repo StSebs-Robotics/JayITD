@@ -55,37 +55,39 @@ public class ShootForTheStar extends LinearOpMode {
     @Override public void runOpMode(){
         //all of these are during init
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d initialPose = Positions.clipsInitialPos;
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(7, -60, Math.toRadians(90)));
+        Pose2d initialPose = new Pose2d(-15.5, 60, Math.toRadians(270));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         // make instance
         servos = new Servos(hardwareMap);
         slideMotors = new SlideMotors(hardwareMap);
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
-                .splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
-                .setTangent(90);
+                //.splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2,35),Math.toRadians(270)),180);
                 //Slides down open claw
-        TrajectoryActionBuilder clipsToPush = drive.actionBuilder(new Pose2d(new Vector2d(-2,35),Math.toRadians(270)))
+        TrajectoryActionBuilder clipsToPush = initToCLips.endTrajectory().fresh()
+
+                .setTangent(90)
+                //Slides down open claw
                 .splineToConstantHeading(new Vector2d(-35,38),Math.toRadians(270))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-35,13))
+                .strafeTo(new Vector2d(-33,11))
 
                 // 1st pixel
-                .strafeTo(new Vector2d(-46,13))
-                .strafeTo(new Vector2d(-46,57))
+                .strafeTo(new Vector2d(-43,11))
+                .strafeTo(new Vector2d(-43,55))
 
                 //2nd Pixel
-                .strafeTo(new Vector2d(-46,13))
-                .strafeTo(new Vector2d(-56,13))
+                .strafeTo(new Vector2d(-48,11))
+                .strafeTo(new Vector2d(-57,11))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-56,57))
+                .strafeTo(new Vector2d(-57,56))
 
 
                 //3rd Pixel
-                .strafeTo(new Vector2d(-56,13))
-                .strafeTo(new Vector2d(-65,13))
+                .strafeTo(new Vector2d(-58,11))
+                .strafeTo(new Vector2d(-62,11))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-65,57));
+                .strafeTo(new Vector2d(-62,56));
 
         int visionOutputPosition = 1;
 

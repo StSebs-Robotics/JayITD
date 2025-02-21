@@ -64,24 +64,24 @@ public class PushAllOfThem extends LinearOpMode {
                 //Slides down open claw
 
                 .splineToConstantHeading(new Vector2d(-35,38),Math.toRadians(270))
-                .strafeTo(new Vector2d(-35,13))
+                .strafeTo(new Vector2d(-33,11))
 
                 // 1st pixel
-                .strafeTo(new Vector2d(-45,13))
-                .strafeTo(new Vector2d(-45,60))
+                .strafeTo(new Vector2d(-43,11))
+                .strafeTo(new Vector2d(-43,57))
 
                 //2nd Pixel
-                .strafeTo(new Vector2d(-48,13))
-                .strafeTo(new Vector2d(-57,13))
+                .strafeTo(new Vector2d(-48,11))
+                .strafeTo(new Vector2d(-57,11))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-57,60))
+                .strafeTo(new Vector2d(-57,57))
 
 
                 //3rd Pixel
-                .strafeTo(new Vector2d(-58,13))
-                .strafeTo(new Vector2d(-62,13))
+                .strafeTo(new Vector2d(-58,11))
+                .strafeTo(new Vector2d(-62,11))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-62,60));
+                .strafeTo(new Vector2d(-62,57));
 
         int visionOutputPosition = 1;
 

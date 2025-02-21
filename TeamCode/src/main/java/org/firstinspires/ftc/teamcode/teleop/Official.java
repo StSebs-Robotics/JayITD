@@ -46,7 +46,7 @@ public class Official extends LinearOpMode {
     private IMU imu;
 
     private double sethControlThing;
-    private double wrightSpeed;
+    private double wrightSpeed = 1;
     private boolean toggleOn = false;
 
     @Override

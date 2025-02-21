@@ -44,7 +44,7 @@ import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "a field legth of strafing ", group = "Autonomous")
+@Autonomous(name = "SIMPLE BUCKET", group = "Autonomous")
 public class SimpleBucket extends LinearOpMode {
 
 
