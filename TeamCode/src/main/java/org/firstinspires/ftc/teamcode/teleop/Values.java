@@ -3,7 +3,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Values {
-    public static double speedReducer = .3;
+    public static double speedReducer = .5;
 
     public static double intakeClawOpen = .7;
     public static double intakeclawClose = .45;

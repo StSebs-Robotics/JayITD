@@ -46,6 +46,8 @@ public class Official extends LinearOpMode {
     private IMU imu;
 
     private double sethControlThing;
+    private double wrightSpeed;
+    private boolean toggleOn = false;
 
     @Override
     public void runOpMode() {
@@ -118,13 +120,25 @@ public class Official extends LinearOpMode {
 
             double motorSpeed;
             double botHeading;
+
+            //reset yaw
             if (currentGamepad1.options && !previousGamepad1.options) {
-//                posX = drive.pose.position.x;
-//                posY = drive.pose.position.y;
-//               drive.pose =  new Pose2d(posX,posY,Math.toRadians(90));
                 imu.resetYaw();
             }
 
+            //the toggle
+            if (currentGamepad1.a && !previousGamepad1.a){
+                if(!toggleOn){
+                    toggleOn = true;
+                    wrightSpeed = Values.speedReducer;
+
+                } else if (toggleOn){
+                    toggleOn = false;
+                    wrightSpeed= 1;
+                }
+            }
+
+            //drive
             if (currentGamepad2.left_stick_y != 0 || currentGamepad2.left_stick_x != 0 || currentGamepad2.right_stick_x != 0) {
                 //make it slower
                 motorSpeed = Values.speedReducer;
@@ -154,33 +168,6 @@ public class Official extends LinearOpMode {
                 rightBackDrive.setPower(backRightPower);
 
             }
-            else if (currentGamepad1.a) {
-                motorSpeed = Values.speedReducer;
-                double y = -gamepad2.left_stick_y; // Remember, Y stick value is reversed
-                double x = gamepad2.left_stick_x;
-                double rx = gamepad2.right_stick_x;
-                //double botHeading = drive.pose.heading.toDouble();
-                botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
-                // Rotate the movement direction counter to the bot's rotation
-                double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-                double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
-
-                rotX = rotX * 1.1;  // Counteract imperfect strafing
-
-                // Denominator is the largest motor power (absolute value) or 1
-                // This ensures all the powers maintain the same ratio,
-                // but only if at least one is out of the range [-1, 1]
-                double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                double frontLeftPower = (rotY + rotX + rx) / denominator * motorSpeed;
-                double backLeftPower = (rotY - rotX + rx) / denominator * motorSpeed;
-                double frontRightPower = (rotY - rotX - rx) / denominator * motorSpeed;
-                double backRightPower = (rotY + rotX - rx) / denominator * motorSpeed;
-                leftFrontDrive.setPower(frontLeftPower);
-                leftBackDrive.setPower(backLeftPower);
-                rightFrontDrive.setPower(frontRightPower);
-                rightBackDrive.setPower(backRightPower);
-            }
             else {
                 double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
                 double x = gamepad1.left_stick_x;
@@ -198,15 +185,16 @@ public class Official extends LinearOpMode {
                 // This ensures all the powers maintain the same ratio,
                 // but only if at least one is out of the range [-1, 1]
                 double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                double frontLeftPower = (rotY + rotX + rx) / denominator;
-                double backLeftPower = (rotY - rotX + rx) / denominator;
-                double frontRightPower = (rotY - rotX - rx) / denominator;
-                double backRightPower = (rotY + rotX - rx) / denominator;
+                double frontLeftPower = (rotY + rotX + rx) / denominator * wrightSpeed;
+                double backLeftPower = (rotY - rotX + rx) / denominator*wrightSpeed;
+                double frontRightPower = (rotY - rotX - rx) / denominator*wrightSpeed;
+                double backRightPower = (rotY + rotX - rx) / denominator*wrightSpeed;
                 leftFrontDrive.setPower(frontLeftPower);
                 leftBackDrive.setPower(backLeftPower);
                 rightFrontDrive.setPower(frontRightPower);
                 rightBackDrive.setPower(backRightPower);
             }
+
             //TODO: fix this shit
             if (currentGamepad1.share && previousGamepad1.share) {
                 while (botHeading != 0) {
@@ -252,15 +240,6 @@ public class Official extends LinearOpMode {
             if (currentGamepad1.circle && previousGamepad1.circle){
                 slidePosition[0] = Values.slideMax;
             }
-            if (currentGamepad1.circle && previousGamepad1.circle) {
-                if (!slidesIsUp) {
-                    slidePosition[0] = Values.slideMax;
-                    slidesIsUp = true;
-                } else if (slidesIsUp) {
-                    slidePosition[0] = 0;
-                    slidesIsUp = false;
-                }
-            }
 
             //all servo stuff
             sethControlThing = outtakeElbow.getPosition();
@@ -295,7 +274,6 @@ public class Official extends LinearOpMode {
             }
 
             //intake open N close
-            //don know y its kinda jank
             if (currentGamepad2.circle && !previousGamepad2.circle) {
                 if (!elbowIsDown) {
                     intakeElbow.setPosition(Values.intakeElbowWait);
@@ -306,35 +284,37 @@ public class Official extends LinearOpMode {
                     slidePosition[0] = 0;
                     moveSlides(slidePosition[0], Values.velocity);
                     elbowIsDown = true;
-                    slidesIn();
                 } else if (elbowIsDown == true) {
                     intakeElbow.setPosition(Values.intakeElbowDown);
-                    sleep(500);
+                    sleep(350);
                     intakeClaw.setPosition(Values.intakeclawClose);
                     sleep(400);
                     wrist.setPosition(Values.wristUp);
                     clawPivot.setPosition(Values.MID_SERVO);
                     intakeElbow.setPosition(Values.intakeElbowUp);
                     slidesIn();
-                    sleep(1200);
+                    sleep(1100);
                     outtakeClaw.setPosition(Values.outtakeClawClose);
                     sleep(300);
                     intakeClaw.setPosition(Values.intakeClawOpen);
+                    slidesTransfer();
                     sleep(200);
                     outtakeElbow.setPosition(Values.outtakeElbowUp);
+                    slidesIn();
                     elbowIsDown = false;
                 }
             }
-                if (currentGamepad2.cross && !previousGamepad2.cross) {
+
+            if (currentGamepad2.cross && !previousGamepad2.cross) {
                     if (!elbowIsDown) {
                         intakeElbow.setPosition(Values.intakeElbowWait);
                         wrist.setPosition(Values.wristDown);
-                        intakeClaw.setPosition(Values.intakeClawOpen);
+                        intakeClaw.setPosition(Values.intakeclawClose);
                         elbowIsDown= true;
                     } else if (elbowIsDown) {
                         intakeClaw.setPosition(Values.intakeClawOpen);
                         intakeElbow.setPosition(Values.intakeElbowDown);
-                        sleep(500);
+                        sleep(450);
                         intakeClaw.setPosition(Values.intakeclawClose);
                         sleep(400);
                         wrist.setPosition(Values.wristUp);
@@ -371,11 +351,12 @@ public class Official extends LinearOpMode {
                         outtakeIsFlat = false;
                     }
                 }
+
                 //pivot!
                 if (currentGamepad2.dpad_right) {
-                    clawPivot.setPosition(clawPivot.getPosition() - 0.008);
+                    clawPivot.setPosition(clawPivot.getPosition() - 0.009);
                 } else if (currentGamepad2.dpad_left) {
-                    clawPivot.setPosition(clawPivot.getPosition() + 0.008);
+                    clawPivot.setPosition(clawPivot.getPosition() + 0.009);
                 } else if (currentGamepad2.share) {
                     clawPivot.setPosition(Values.MID_SERVO);
                 }
