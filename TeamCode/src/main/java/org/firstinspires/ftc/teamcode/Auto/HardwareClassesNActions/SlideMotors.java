@@ -95,8 +95,8 @@ public class SlideMotors {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(1500);
-                outtakeSlide2.setTargetPosition(1500);
+                outtakeSlide1.setTargetPosition(1600);
+                outtakeSlide2.setTargetPosition(1600);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);

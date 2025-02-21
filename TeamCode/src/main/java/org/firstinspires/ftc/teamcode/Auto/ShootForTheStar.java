@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 // RR-specific imports
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -63,32 +64,34 @@ public class ShootForTheStar extends LinearOpMode {
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-2,33),Math.toRadians(270))
-                .waitSeconds(2);
+                .splineToConstantHeading(new Vector2d(-2,35.5),Math.toRadians(270))
+                .waitSeconds(0.5);
         //35
                 //Slides down open claw
         TrajectoryActionBuilder clipsToPush = initToCLips.endTrajectory().fresh()
 
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(-35,38,Math.toRadians(270)),Math.toRadians(270))
-                .strafeTo(new Vector2d(-35,13))
+                .strafeTo(new Vector2d(-35,10))
 
                 // 1st pixel
-                .strafeTo(new Vector2d(-43,11))
-                .strafeTo(new Vector2d(-43,55))
+                .strafeTo(new Vector2d(-43,10))
+                .strafeTo(new Vector2d(-43,53))
 
                 //2nd Pixel
-                .strafeTo(new Vector2d(-48,11))
-                .strafeTo(new Vector2d(-57,11))
+                .strafeTo(new Vector2d(-48,10))
+                .strafeTo(new Vector2d(-55,10))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-57,56))
+                .strafeTo(new Vector2d(-55,53))
 
 
                 //3rd Pixel
-                .strafeTo(new Vector2d(-58,11))
-                .strafeTo(new Vector2d(-62,11))
+                .strafeTo(new Vector2d(-55,8))
+                .strafeTo(new Vector2d(-60,8))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-62,56));
+                .strafeTo(new Vector2d(-60,53));
+
+
 
         int visionOutputPosition = 1;
 
@@ -108,15 +111,19 @@ public class ShootForTheStar extends LinearOpMode {
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        servos.OuttakeClose(),
-                        servos.outtakeUp(),
-                        slideMotors.liftPutClips(),
-                        initToCLips.build(),
-                        slideMotors.liftDown(),
+                        new ParallelAction(
+                                servos.OuttakeClose(),
+                                servos.outtakeFlat(),
+                                slideMotors.liftPutClips(),
+                                new SequentialAction(initToCLips.build())
+                        ),
+                        slideMotors.liftPutClipsDown(),
+                        //or do slideMotor.liftdown, but likely cook the servo, careful
                         servos.outtakeOpen(),
-                        //slideMotors.liftPutClipsDown(),
-                        clipsToPush.build(),
-                        servos.outtakedown()
+                        new ParallelAction(
+                                servos.outtakedown(),
+                                new SequentialAction(clipsToPush.build())
+                        )
 
                 )
         );

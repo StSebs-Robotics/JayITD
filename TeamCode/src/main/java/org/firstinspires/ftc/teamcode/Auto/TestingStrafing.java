@@ -59,7 +59,7 @@ public class TestingStrafing extends LinearOpMode {
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 //.strafeTo(new Vector2d(62,-61));
-                        .lineToY(62);
+                        .setTangent(Math.toRadians(90));
 
         waitForStart();
 

@@ -26,8 +26,8 @@ public class Values {
 
     public static double slide1in = 0.98;
     public static double slide2in = 0.02;
-    public static double slide1wait = .995;
-    public static double slide2wait = 0.05;
+    public static double slide1wait = .9;
+    public static double slide2wait = 0.1;
     public static double slide1out = .6;
     public static double slide2out = .4;
 
