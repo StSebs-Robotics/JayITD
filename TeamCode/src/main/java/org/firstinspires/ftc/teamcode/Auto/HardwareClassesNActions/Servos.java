@@ -142,7 +142,6 @@ public class Servos {
     public class OuttakeOpen implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            new SleepAction(3);
             outtakeClaw.setPosition(Values.outakeclawOpen);
             return false;
         }

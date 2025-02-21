@@ -20,7 +20,6 @@ public class PushandClip1 {
                         .setTangent(Math.toRadians(270))
                         .splineToConstantHeading(new Vector2d(-2,35),Math.toRadians(270))
                         //.splineToLinearHeading(new Pose2d(-2,35,Math.toRadians(90)),Math.toRadians(270))
-                        .setTangent(90)
                         //Slides down open claw
                         
                         .setTangent(Math.toRadians(90))

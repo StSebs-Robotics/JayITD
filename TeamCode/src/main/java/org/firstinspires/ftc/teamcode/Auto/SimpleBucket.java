@@ -61,7 +61,7 @@ public class SimpleBucket extends LinearOpMode {
                 .setTangent(Math.toRadians(270))
                 .strafeTo(new Vector2d(37,53))
                 .splineToConstantHeading(new Vector2d(47,40),Math.toRadians(280))
-                .waitSeconds(3)
+                .waitSeconds(1)
                 //pickup
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(53,58,Math.toRadians(45)),Math.toRadians(70))

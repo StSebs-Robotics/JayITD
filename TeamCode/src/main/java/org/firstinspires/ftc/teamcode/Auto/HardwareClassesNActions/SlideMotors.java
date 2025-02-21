@@ -63,8 +63,8 @@ public class SlideMotors {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(2400);
-                outtakeSlide2.setTargetPosition(2400);
+                outtakeSlide1.setTargetPosition(2200);
+                outtakeSlide2.setTargetPosition(2200);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);
@@ -75,9 +75,10 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos < 2400.0) {
+            if (pos < 2200.0) {
                 return true;
             } else {
+                //todo: the slide go down after the action
                 outtakeSlide1.setPower(0);
                 outtakeSlide2.setPower(0);
                 return false;
@@ -88,14 +89,14 @@ public class SlideMotors {
         return new LiftPutClips();
     }
 
-    public class LiftUp implements Action {
+    public class LiftPutClipsDown implements Action {
         private boolean initialized = false;
 
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(2300);
-                outtakeSlide2.setTargetPosition(2300);
+                outtakeSlide1.setTargetPosition(1500);
+                outtakeSlide2.setTargetPosition(1500);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);
@@ -106,7 +107,39 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos > 2300.0) {
+            if (pos > 1500.0) {
+                return true;
+            } else {
+                //todo: the slide go down after the action
+                outtakeSlide1.setPower(0);
+                outtakeSlide2.setPower(0);
+                return false;
+            }
+        }
+    }
+    public Action liftPutClipsDown() {
+        return new LiftPutClips();
+    }
+
+    public class LiftUp implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                outtakeSlide1.setTargetPosition(Values.slideMax);
+                outtakeSlide2.setTargetPosition(Values.slideMax);
+                outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                outtakeSlide1.setPower(1);
+                outtakeSlide2.setPower(1);
+
+                initialized = true;
+            }
+
+            double pos = outtakeSlide1.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos > 2800) {
                 return true;
             } else {
                 outtakeSlide1.setPower(0);
@@ -137,7 +170,7 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos < 2100.0) {
+            if (pos < 2600.0) {
                 return true;
             } else {
                 outtakeSlide1.setPower(0);

@@ -3,7 +3,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Values {
-    public static double speedReducer = .5;
+    public static double speedReducer = .4;
 
     public static double intakeClawOpen = .7;
     public static double intakeclawClose = .45;
@@ -19,7 +19,7 @@ public class Values {
     public static double outtakeElbowUp = 0.2;
     public static double outtakeElbowFlat = 0.03;
 
-    public static double outtakeClawClose = 0.01;
+    public static double outtakeClawClose = 0.00;
     public static double outakeclawOpen = .2;
 
     public static final double MID_SERVO   =  0.5 ;
