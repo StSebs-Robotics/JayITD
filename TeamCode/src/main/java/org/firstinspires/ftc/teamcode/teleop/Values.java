@@ -9,14 +9,14 @@ public class Values {
     public static double intakeclawClose = .45;
 
     public static double wristDown = .1;
-    public static double wristUp = .6;
+    public static double wristUp = .64;
 
     public static double intakeElbowDown = .2;
     public static double intakeElbowUp = .98;
-    public static double intakeElbowWait = .3;
+    public static double intakeElbowWait = .35;
 
     public static double outtakeElbowDown = .83;
-    public static double outtakeElbowUp = 0.2;
+    public static double outtakeElbowUp = 0.1;
     public static double outtakeElbowFlat = 0.03;
 
     public static double outtakeClawClose = 0.00;
@@ -32,6 +32,8 @@ public class Values {
     public static double slide2out = .4;
 
     public static int slideMax = 3000;
+    public static int wrightSlide = 1742;
+
 
     public static double velocity = 1.00;
 

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,12 +9,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Auto.Positions;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @TeleOp(name = "OFFICIAL TELEOP", group = "Linear OpMode")
 //@Disabled
 public class Official extends LinearOpMode {
+    FtcDashboard dash = FtcDashboard.getInstance();
+    Pose2d initialPose = Positions.clipsInitialPosClip;
+    MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
     /* Declare OpMode members. */
     public Servo intakeClaw = null;
@@ -311,7 +320,7 @@ public class Official extends LinearOpMode {
                         outtakeIsDown = false;
                     }
                 }
-                if (currentGamepad2.square && !previousGamepad1.square) {
+                if (currentGamepad2.square && !previousGamepad2.square) {
                     if (!outtakeIsFlat) {
                         outtakeClaw.setPosition(Values.outakeclawOpen+0.03);
                         sleep(200);
@@ -324,6 +333,10 @@ public class Official extends LinearOpMode {
                         outtakeIsFlat = false;
                     }
                 }
+            if (currentGamepad1.triangle && !previousGamepad1.triangle) {
+                slidePosition[0] = Values.wrightSlide;
+                moveSlides(slidePosition[0], Values.velocity);
+            }
 
                 //pivot!
                 if (currentGamepad2.dpad_right) {
@@ -341,7 +354,8 @@ public class Official extends LinearOpMode {
                 telemetry.addData("Intake big rotate (cross)", "%.02f", intakeElbow.getPosition());
                 telemetry.addData("outake, triangle, elbow claw", "%.02f, %.02f", outtakeElbow.getPosition(), outtakeClaw.getPosition());
                 telemetry.addData("slides servos (dpad up, or leftNright bumpy)", "%.02f, %.02f", intakeSlide1.getPosition(), intakeSlide2.getPosition());
-                telemetry.addData("motor position", outtakeSlide1.getCurrentPosition());
+            telemetry.addData("slides servos (dpad up, or leftNright bumpy)", "%.02f, %.02f", clawPivot.getPosition(), outtakeElbow.getPosition());
+                telemetry.addData("slide motor position", outtakeSlide1.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -402,8 +416,8 @@ public class Official extends LinearOpMode {
             sleep(300);
             intakeClaw.setPosition(Values.intakeClawOpen);
             slidesTransfer();
-            sleep(450);
             outtakeElbow.setPosition(Values.outtakeElbowUp);
+            sleep(400);
             slidesIn();
             elbowIsDown = false;
         }
