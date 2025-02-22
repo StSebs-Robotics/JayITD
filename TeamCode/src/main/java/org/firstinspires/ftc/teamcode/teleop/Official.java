@@ -28,7 +28,7 @@ public class Official extends LinearOpMode {
     private boolean elbowIsDown = false;
     private boolean outtakeIsDown = false;
     private boolean outtakeIsFlat = false;
-    private boolean slidesIsUp = false;
+    private final boolean slidesIsUp = false;
 
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -275,34 +275,7 @@ public class Official extends LinearOpMode {
 
             //intake open N close
             if (currentGamepad2.circle && !previousGamepad2.circle) {
-                if (!elbowIsDown) {
-                    intakeElbow.setPosition(Values.intakeElbowWait);
-                    intakeClaw.setPosition(Values.intakeClawOpen);
-                    wrist.setPosition(Values.wristDown);
-                    outtakeClaw.setPosition(Values.outakeclawOpen);
-                    outtakeElbow.setPosition(Values.outtakeElbowDown);
-                    slidePosition[0] = 0;
-                    moveSlides(slidePosition[0], Values.velocity);
-                    elbowIsDown = true;
-                } else if (elbowIsDown == true) {
-                    intakeElbow.setPosition(Values.intakeElbowDown);
-                    sleep(350);
-                    intakeClaw.setPosition(Values.intakeclawClose);
-                    sleep(400);
-                    wrist.setPosition(Values.wristUp);
-                    clawPivot.setPosition(Values.MID_SERVO);
-                    intakeElbow.setPosition(Values.intakeElbowUp);
-                    slidesIn();
-                    sleep(1100);
-                    outtakeClaw.setPosition(Values.outtakeClawClose);
-                    sleep(300);
-                    intakeClaw.setPosition(Values.intakeClawOpen);
-                    slidesTransfer();
-                    sleep(200);
-                    outtakeElbow.setPosition(Values.outtakeElbowUp);
-                    slidesIn();
-                    elbowIsDown = false;
-                }
+                new Thread(this::handleCircleButtonPress).start();
             }
 
             if (currentGamepad2.cross && !previousGamepad2.cross) {
@@ -403,6 +376,36 @@ public class Official extends LinearOpMode {
         } else {
             intakeSlide2.setPosition(intakeSlide2.getPosition() - 0.05);
             intakeSlide1.setPosition(intakeSlide1.getPosition() + 0.05);
+        }
+    }
+    private void handleCircleButtonPress() {
+        if (!elbowIsDown) {
+            intakeElbow.setPosition(Values.intakeElbowWait);
+            intakeClaw.setPosition(Values.intakeClawOpen);
+            wrist.setPosition(Values.wristDown);
+            outtakeClaw.setPosition(Values.outakeclawOpen);
+            outtakeElbow.setPosition(Values.outtakeElbowDown);
+            slidePosition[0] = 0;
+            moveSlides(slidePosition[0], Values.velocity);
+            elbowIsDown = true;
+        } else if (elbowIsDown) {
+            intakeElbow.setPosition(Values.intakeElbowDown);
+            sleep(350);
+            intakeClaw.setPosition(Values.intakeclawClose);
+            sleep(400);
+            wrist.setPosition(Values.wristUp);
+            clawPivot.setPosition(Values.MID_SERVO);
+            intakeElbow.setPosition(Values.intakeElbowUp);
+            slidesIn();
+            sleep(1100);
+            outtakeClaw.setPosition(Values.outtakeClawClose);
+            sleep(300);
+            intakeClaw.setPosition(Values.intakeClawOpen);
+            slidesTransfer();
+            sleep(450);
+            outtakeElbow.setPosition(Values.outtakeElbowUp);
+            slidesIn();
+            elbowIsDown = false;
         }
     }
 }
