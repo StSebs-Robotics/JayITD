@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
 
 import org.firstinspires.ftc.teamcode.teleop.Values;
 
@@ -18,6 +19,7 @@ public class Servos {
     public Servo outtakeElbow;
     private Servo intakeSlide1;
     private Servo intakeSlide2;
+    private ServoController servoController;
 
     public Servos(HardwareMap hardwareMap) {
         intakeClaw = hardwareMap.get(Servo.class, "0");
@@ -247,4 +249,29 @@ public class Servos {
     public Action elbowUp() {
         return new ElbowUp();
     }
+
+    public class DisableServos implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            servoController = outtakeClaw.getController();
+            servoController.pwmDisable();
+            return false;
+        }
+    }
+    public Action disableServos() {
+        return new DisableServos();
+    }
+
+    public class EnableServos implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            servoController = outtakeClaw.getController();
+            servoController.pwmEnable();
+            return false;
+        }
+    }
+    public Action enableServos() {
+        return new EnableServos();
+    }
+
 }

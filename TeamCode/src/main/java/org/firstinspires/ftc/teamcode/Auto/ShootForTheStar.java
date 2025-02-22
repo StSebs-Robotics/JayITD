@@ -40,6 +40,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
 
 import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
 import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.SlideMotors;
@@ -52,6 +54,7 @@ public class ShootForTheStar extends LinearOpMode {
     private Servos servos;
     private Pose2d currentPose;
     private SlideMotors slideMotors;
+    private ServoController servoController;
 
     @Override public void runOpMode(){
         //all of these are during init
@@ -64,7 +67,7 @@ public class ShootForTheStar extends LinearOpMode {
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-2,35.5),Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-4,36),Math.toRadians(270))
                 .waitSeconds(0.5);
         //35
                 //Slides down open claw
@@ -120,14 +123,16 @@ public class ShootForTheStar extends LinearOpMode {
                                 new SequentialAction(
                                         servos.OuttakeClose(),
                                         //servos.outtakeOpen(),
-                                        servos.outtakeFlat(),
+                                        //servos.outtakeFlat(),
                                         servos.outtakeUp(),
                                         slideMotors.liftPutClips()
                                 ),
                                 new SequentialAction(initToCLips.build())
                         ),
+                        servos.disableServos(),
                         slideMotors.liftPutClipsDown(),
                         //or do slideMotor.liftdown, but likely cook the servo, careful
+                        servos.enableServos(),
                        servos.outtakeFlat(),
                         //slideMotors.liftDown(),
                         servos.outtakeOpen(),

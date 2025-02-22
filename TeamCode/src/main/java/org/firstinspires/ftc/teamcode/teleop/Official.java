@@ -331,16 +331,6 @@ public class Official extends LinearOpMode {
                     }
                 }
 
-            if (currentGamepad1.circle && !previousGamepad1.circle) {
-                disableServo(intakeElbow);
-                disableServo(intakeClaw);
-                //slidePosition[0] = 0;
-                //moveSlides(slidePosition[0], Values.velocity);
-                //sleep(200);
-                //enableServo(intakeElbow);
-                //enableServo(intakeClaw);
-            }
-
             if (currentGamepad1.triangle && !previousGamepad1.triangle) {
                 slidePosition[0] = Values.wrightSlide;
                 moveSlides(slidePosition[0], Values.velocity);
@@ -368,15 +358,6 @@ public class Official extends LinearOpMode {
             }
 
         }
-    public void disableServo(Servo servo) {
-        servoController = servo.getController();
-        servoController.pwmDisable();
-    }
-
-    public void enableServo(Servo servo) {
-        servoController = servo.getController();
-        servoController.pwmEnable();
-    }
 
     private void slidesOut () {
         intakeSlide1.setPosition(Values.slide1out);
