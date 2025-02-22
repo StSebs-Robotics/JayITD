@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -16,6 +17,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 @TeleOp(name = "OFFICIAL TELEOP", group = "Linear OpMode")
 //@Disabled
 public class Official extends LinearOpMode {
+
+    private ServoController servoController;
 
     /* Declare OpMode members. */
     public Servo intakeClaw = null;
@@ -327,6 +330,16 @@ public class Official extends LinearOpMode {
                         outtakeIsFlat = false;
                     }
                 }
+
+            if (currentGamepad1.circle && !previousGamepad1.circle) {
+                disableServo(intakeElbow);
+                disableServo(intakeClaw);
+                slidePosition[0] = 0;
+                moveSlides(slidePosition[0], Values.velocity);
+                enableServo(intakeElbow);
+                enableServo(intakeClaw);
+            }
+
             if (currentGamepad1.triangle && !previousGamepad1.triangle) {
                 slidePosition[0] = Values.wrightSlide;
                 moveSlides(slidePosition[0], Values.velocity);
@@ -354,6 +367,15 @@ public class Official extends LinearOpMode {
             }
 
         }
+    public void disableServo(Servo servo) {
+        servoController = servo.getController();
+        servoController.pwmDisable();
+    }
+
+    public void enableServo(Servo servo) {
+        servoController = servo.getController();
+        servoController.pwmEnable();
+    }
 
     private void slidesOut () {
         intakeSlide1.setPosition(Values.slide1out);
