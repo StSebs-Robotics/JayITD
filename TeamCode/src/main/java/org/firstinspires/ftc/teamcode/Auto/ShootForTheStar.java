@@ -64,7 +64,7 @@ public class ShootForTheStar extends LinearOpMode {
         //test path
         TrajectoryActionBuilder initToCLips = drive.actionBuilder(initialPose)
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-4,35.),Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-2,35.5),Math.toRadians(270))
                 .waitSeconds(0.5);
         //35
                 //Slides down open claw
@@ -128,7 +128,7 @@ public class ShootForTheStar extends LinearOpMode {
                         ),
                         slideMotors.liftPutClipsDown(),
                         //or do slideMotor.liftdown, but likely cook the servo, careful
-                       //servos.outtakeFlat(),
+                       servos.outtakeFlat(),
                         //slideMotors.liftDown(),
                         servos.outtakeOpen(),
                         new ParallelAction(
