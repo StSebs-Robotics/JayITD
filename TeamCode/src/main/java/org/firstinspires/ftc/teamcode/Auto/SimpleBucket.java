@@ -41,12 +41,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.Servos;
+import org.firstinspires.ftc.teamcode.Auto.HardwareClassesNActions.SlideMotors;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
 @Autonomous(name = "SIMPLE BUCKET", group = "Autonomous")
 public class SimpleBucket extends LinearOpMode {
 
+    private Servos servos;
 
     @Override public void runOpMode(){
         //all of these are during init
@@ -54,7 +56,7 @@ public class SimpleBucket extends LinearOpMode {
         // instantiate your MecanumDrive at a particular pose.
         Pose2d initialPose = Positions.bucketInitialPos;
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
-        Servos servos = new Servos(hardwareMap);
+        servos = new Servos(hardwareMap);
 
         //test path
         TrajectoryActionBuilder initToPark = drive.actionBuilder(initialPose)
@@ -73,15 +75,15 @@ public class SimpleBucket extends LinearOpMode {
 //                //slides down
 //                .splineToLinearHeading(new Pose2d(28,12,Math.toRadians(0)),Math.toRadians(180));
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(32,8,Math.toRadians(0)),Math.toRadians(180));
+                .splineToLinearHeading(new Pose2d(23,8,Math.toRadians(0)),Math.toRadians(180));
 
         waitForStart();
 
         if (isStopRequested()) return;
+
         Actions.runBlocking(
                 new SequentialAction(
-                        initToPark.build(),
-                        servos.outtakeFlat()
+                        //initToPark.build(),
                 )
         );
     }

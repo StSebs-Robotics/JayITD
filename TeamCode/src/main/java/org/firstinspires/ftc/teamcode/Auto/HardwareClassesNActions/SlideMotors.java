@@ -63,8 +63,8 @@ public class SlideMotors {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(1600);
-                outtakeSlide2.setTargetPosition(1600);
+                outtakeSlide1.setTargetPosition(1900);
+                outtakeSlide2.setTargetPosition(1900);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);
@@ -75,7 +75,7 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos < 1600.0) {
+            if (pos < 1850.0) {
                 return true;
             } else {
                 //todo: the slide go down after the action

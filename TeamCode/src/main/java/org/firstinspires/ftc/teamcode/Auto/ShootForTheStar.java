@@ -119,14 +119,17 @@ public class ShootForTheStar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         servos.OuttakeClose(),
+                                        //servos.outtakeOpen(),
                                         servos.outtakeFlat(),
-                                        //servos.outtakeUp(),
-                                        slideMotors.liftPutClips()),
+                                        servos.outtakeUp(),
+                                        slideMotors.liftPutClips()
+                                ),
                                 new SequentialAction(initToCLips.build())
                         ),
                         slideMotors.liftPutClipsDown(),
                         //or do slideMotor.liftdown, but likely cook the servo, careful
                        servos.outtakeFlat(),
+                        //slideMotors.liftDown(),
                         servos.outtakeOpen(),
                         new ParallelAction(
                                 servos.outtakedown(),
