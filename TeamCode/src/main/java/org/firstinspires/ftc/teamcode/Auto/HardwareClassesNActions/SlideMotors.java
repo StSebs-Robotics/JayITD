@@ -107,7 +107,7 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos > 1500.0) {
+            if (pos > 850.0) {
                 return true;
             } else {
                 //todo: the slide go down after the action
