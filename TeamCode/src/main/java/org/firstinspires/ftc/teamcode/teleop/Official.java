@@ -334,10 +334,11 @@ public class Official extends LinearOpMode {
             if (currentGamepad1.circle && !previousGamepad1.circle) {
                 disableServo(intakeElbow);
                 disableServo(intakeClaw);
-                slidePosition[0] = 0;
-                moveSlides(slidePosition[0], Values.velocity);
-                enableServo(intakeElbow);
-                enableServo(intakeClaw);
+                //slidePosition[0] = 0;
+                //moveSlides(slidePosition[0], Values.velocity);
+                //sleep(200);
+                //enableServo(intakeElbow);
+                //enableServo(intakeClaw);
             }
 
             if (currentGamepad1.triangle && !previousGamepad1.triangle) {

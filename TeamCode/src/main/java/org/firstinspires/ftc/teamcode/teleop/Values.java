@@ -15,8 +15,8 @@ public class Values {
     public static double intakeElbowUp = .98;
     public static double intakeElbowWait = .35;
 
-    public static double outtakeElbowDown = .83;
     public static double outtakeElbowUp = 0.1;
+    public static double outtakeElbowDown = 0.88;
     public static double outtakeElbowFlat = 0.03;
 
     public static double outtakeClawClose = 0.00;
