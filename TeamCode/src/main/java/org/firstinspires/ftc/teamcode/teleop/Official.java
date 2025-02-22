@@ -311,7 +311,7 @@ public class Official extends LinearOpMode {
                         outtakeIsDown = false;
                     }
                 }
-                if (currentGamepad2.square && !previousGamepad1.square) {
+                if (currentGamepad2.square && !previousGamepad2.square) {
                     if (!outtakeIsFlat) {
                         outtakeClaw.setPosition(Values.outakeclawOpen+0.03);
                         sleep(200);
@@ -324,6 +324,10 @@ public class Official extends LinearOpMode {
                         outtakeIsFlat = false;
                     }
                 }
+            if (currentGamepad1.triangle && !previousGamepad1.triangle) {
+                slidePosition[0] = Values.wrightSlide;
+                moveSlides(slidePosition[0], Values.velocity);
+            }
 
                 //pivot!
                 if (currentGamepad2.dpad_right) {
@@ -402,8 +406,8 @@ public class Official extends LinearOpMode {
             sleep(300);
             intakeClaw.setPosition(Values.intakeClawOpen);
             slidesTransfer();
-            sleep(450);
             outtakeElbow.setPosition(Values.outtakeElbowUp);
+            sleep(400);
             slidesIn();
             elbowIsDown = false;
         }
