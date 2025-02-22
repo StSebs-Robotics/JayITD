@@ -16,19 +16,20 @@ public class EasyBucket {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(37, 60, Math.toRadians(90)))
-                        .setTangent(Math.toRadians(270))
-                        .strafeTo(new Vector2d(37,53))
-                        .splineToConstantHeading(new Vector2d(47,40),Math.toRadians(280))
-                        .waitSeconds(3)
-                        //pickup
-                        .setTangent(Math.toRadians(90))
-                        .splineToLinearHeading(new Pose2d(53,58,Math.toRadians(45)),Math.toRadians(70))
-                        .waitSeconds(1)
-                        //Slides up
-                        //open claw
-                        .setTangent(Math.toRadians(225))
-                        .splineToConstantHeading(new Vector2d(50,53.5),Math.toRadians(225))
+//                        .setTangent(Math.toRadians(270))
+//                        .strafeTo(new Vector2d(37,53))
+//                        .splineToConstantHeading(new Vector2d(47,40),Math.toRadians(280))
+//                        .waitSeconds(3)
+//                        //pickup
+//                        .setTangent(Math.toRadians(90))
+//                        .splineToLinearHeading(new Pose2d(53,58,Math.toRadians(45)),Math.toRadians(70))
+//                        .waitSeconds(1)
+//                        //Slides up
+//                        //open claw
+//                        .setTangent(Math.toRadians(225))
+//                        .splineToConstantHeading(new Vector2d(50,53.5),Math.toRadians(225))
                         //slides down
+                        .setTangent(Math.toRadians(270))
                         .splineToLinearHeading(new Pose2d(28,12,Math.toRadians(0)),Math.toRadians(180))
 
 //

@@ -63,8 +63,8 @@ public class SlideMotors {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(1700);
-                outtakeSlide2.setTargetPosition(1700);
+                outtakeSlide1.setTargetPosition(1600);
+                outtakeSlide2.setTargetPosition(1600);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);
@@ -75,7 +75,7 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos < 1700.0) {
+            if (pos < 1600.0) {
                 return true;
             } else {
                 //todo: the slide go down after the action
@@ -95,8 +95,8 @@ public class SlideMotors {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             if (!initialized) {
-                outtakeSlide1.setTargetPosition(850);
-                outtakeSlide2.setTargetPosition(850);
+                outtakeSlide1.setTargetPosition(700);
+                outtakeSlide2.setTargetPosition(700);
                 outtakeSlide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 outtakeSlide1.setPower(1);
@@ -107,10 +107,10 @@ public class SlideMotors {
 
             double pos = outtakeSlide1.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (pos > 850.0) {
+            if (pos > 750.0 || pos < 600) {
                 return true;
             } else {
-                //todo: the slide go down after the action
+                //todo: the slide go down after the action, fix this
                 outtakeSlide1.setPower(0);
                 outtakeSlide2.setPower(0);
                 return false;
@@ -182,4 +182,11 @@ public class SlideMotors {
     public Action lifeMax() {
         return new LiftMax();
     }
+
+    public int GetPos (){
+            int pos = outtakeSlide1.getCurrentPosition();
+            return pos;
+
+    }
+
 }

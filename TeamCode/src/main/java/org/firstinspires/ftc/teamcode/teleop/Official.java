@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,9 +16,6 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 @TeleOp(name = "OFFICIAL TELEOP", group = "Linear OpMode")
 //@Disabled
 public class Official extends LinearOpMode {
-    FtcDashboard dash = FtcDashboard.getInstance();
-    Pose2d initialPose = Positions.clipsInitialPosClip;
-    MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
     /* Declare OpMode members. */
     public Servo intakeClaw = null;

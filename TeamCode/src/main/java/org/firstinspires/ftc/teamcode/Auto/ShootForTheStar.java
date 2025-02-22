@@ -89,12 +89,12 @@ public class ShootForTheStar extends LinearOpMode {
                 .strafeTo(new Vector2d(-55,8))
                 .strafeTo(new Vector2d(-60,8))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-60,53))
+                .strafeTo(new Vector2d(-60,53));
 
                 //go back and grab possibly? delete if you want
-                .strafeTo(new Vector2d(-50, 30))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-50, 53));
+                //.strafeTo(new Vector2d(-50, 30))
+                //.waitSeconds(1)
+                //.strafeTo(new Vector2d(-50, 53));
 
 
 
@@ -109,7 +109,7 @@ public class ShootForTheStar extends LinearOpMode {
         }
         int startPosition = visionOutputPosition;
         telemetry.addData("Starting Position", startPosition);
-        telemetry.addData("currentPose",currentPose);
+        telemetry.addData("currentPose", slideMotors.GetPos());
         telemetry.update();
         waitForStart();
 
@@ -126,16 +126,11 @@ public class ShootForTheStar extends LinearOpMode {
                         ),
                         slideMotors.liftPutClipsDown(),
                         //or do slideMotor.liftdown, but likely cook the servo, careful
-                       // servos.outtakeFlat(),
+                       servos.outtakeFlat(),
                         servos.outtakeOpen(),
                         new ParallelAction(
                                 servos.outtakedown(),
                                 slideMotors.liftDown(),
-                                new SequentialAction(clipsToPush.build())
-                        ),
-                        new ParallelAction(
-                                servos.outtakeFlat(),
-                                servos.outtakeOpen(),
                                 new SequentialAction(clipsToPush.build())
                         )
 
