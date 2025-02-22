@@ -89,7 +89,12 @@ public class ShootForTheStar extends LinearOpMode {
                 .strafeTo(new Vector2d(-55,8))
                 .strafeTo(new Vector2d(-60,8))
                 .setTangent(Math.toRadians(270))
-                .strafeTo(new Vector2d(-60,53));
+                .strafeTo(new Vector2d(-60,53))
+
+                //go back and grab possibly? delete if you want
+                .strafeTo(new Vector2d(-50, 30))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-50, 53));
 
 
 
@@ -122,6 +127,11 @@ public class ShootForTheStar extends LinearOpMode {
                         servos.outtakeOpen(),
                         new ParallelAction(
                                 servos.outtakedown(),
+                                new SequentialAction(clipsToPush.build())
+                        ),
+                        new ParallelAction(
+                                servos.outtakeFlat(),
+                                servos.outtakeOpen(),
                                 new SequentialAction(clipsToPush.build())
                         )
 
